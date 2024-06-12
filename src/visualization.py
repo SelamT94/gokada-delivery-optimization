@@ -8,7 +8,7 @@ class Visualization:
         self.data = data
 
     def plot_routes(self):
-        map = folium.Map(location=[self.data['latitude'].mean(), self.data['longitude'].mean()], zoom_start=12)
+        map = folium.Map(location=[self.data['origin_lat'].mean(), self.data['origin_lng'].mean()], zoom_start=12)
         for _, row in self.data.iterrows():
             folium.Marker([row['origin_lat'], row['origin_lng']], popup='Origin').add_to(map)
             folium.Marker([row['dest_lat'], row['dest_lng']], popup='Destination').add_to(map)
@@ -21,9 +21,3 @@ class Visualization:
         plt.title('Density Plot of Orders')
         plt.show()
 
-# Example usage
-if __name__ == "__main__":
-    data = pd.read_csv('C:/Users/dell/Desktop/10Academy/gokada-delivery-optimization/data/driver_locations_during_request.csv')
-    visualization = Visualization(data)
-    visualization.plot_routes()
-    visualization.plot_density()
