@@ -1,4 +1,7 @@
+import pandas as pd
 import folium
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 class Visualization:
     def __init__(self, data):
@@ -17,3 +20,10 @@ class Visualization:
         sns.kdeplot(x='longitude', y='latitude', data=self.data, fill=True)
         plt.title('Density Plot of Orders')
         plt.show()
+
+# Example usage
+if __name__ == "__main__":
+    data = pd.read_csv('C:/Users/dell/Desktop/10Academy/gokada-delivery-optimization/data/driver_locations_during_request.csv')
+    visualization = Visualization(data)
+    visualization.plot_routes()
+    visualization.plot_density()
