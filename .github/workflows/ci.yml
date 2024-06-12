@@ -1,0 +1,53 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run Tests
+      run: pytest
+
+    - name: Check Code Quality
+      run: |
+        flake8 src/
+        pylint src/
+
+    - name: Generate EDA Visualizations
+      run: |
+        jupyter nbconvert --to notebook --execute notebooks/EDA.ipynb
+
+    - name: Generate Feature Engineering Visualizations
+      run: |
+        jupyter nbconvert --to notebook --execute notebooks/Feature_Engineering.ipynb
+
+    - name: Generate Causal Graph Visualizations
+      run: |
+        jupyter nbconvert --to notebook --execute notebooks/Causal_Graph_Construction.ipynb
+
+    - name: Generate Causal Inference Task Visualizations
+      run: |
+        jupyter nbconvert --to notebook --execute notebooks/Causal_Inference_Tasks.ipynb
+
+    - name: Generate Logistic Optimization Visualizations
+      run: |
+        jupyter nbconvert --to notebook --execute notebooks/Logistic_Optimization.ipynb
